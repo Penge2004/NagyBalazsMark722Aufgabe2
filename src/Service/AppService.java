@@ -1,6 +1,7 @@
 package Service;
 
-import Domain.TestClassForNotGettingError;
+import Domain.Medicine;
+import Domain.Patient;
 import Repository.InMemoryRepository;
 
 import java.util.List;
@@ -13,36 +14,36 @@ public class AppService {
     /**
      * Repository for managing the first type of domain element.
      */
-    InMemoryRepository<TestClassForNotGettingError> ChangeRepo1;
+    InMemoryRepository<Medicine> medicineRepository;
     /**
      * Repository for managing the second type of domain element.
      */
-    InMemoryRepository<TestClassForNotGettingError> ChangeRepo2;
+    InMemoryRepository<Patient> patientRepository;
 
 
     /**
      * Constructor to initialize the service with two repositories.
      *
-     * @param ChangeRepo1 the first repository
-     * @param ChangeRepo2 the second repository
+     * @param medicineRepo the first repository
+     * @param patientRepo the second repository
      */
-    public AppService(InMemoryRepository<TestClassForNotGettingError> ChangeRepo1, InMemoryRepository<TestClassForNotGettingError> ChangeRepo2) {
-        this.ChangeRepo1 = ChangeRepo1;
-        this.ChangeRepo2 = ChangeRepo2;
+    public AppService(InMemoryRepository<Medicine> medicineRepo, InMemoryRepository<Patient> patientRepo) {
+        this.medicineRepository = medicineRepo;
+        this.patientRepository = patientRepo;
     }
 
     /**
      * Adds a new object to the first repository.
      */
-    public void add1(int id,String name){
-        ChangeRepo1.create(new TestClassForNotGettingError(id,name));
+    public void addMedicine(int id,String name,int price, String healthProblem){
+        medicineRepository.create(new Medicine(id,name, price,healthProblem));
     }
 
     /**
      * Adds a new object to the second repository.
      */
-    public void add2(int id,String name){
-        ChangeRepo2.create(new TestClassForNotGettingError(id,name));
+    public void addPatient(int id,String name,int age, String diagnose){
+        patientRepository.create(new Patient(id,name,age,diagnose));
     }
 
     /**
@@ -50,8 +51,8 @@ public class AppService {
      *
      * @param id the unique identifier of the object to be deleted.
      */
-    public void delete1(int id){
-        ChangeRepo1.delete(id);
+    public void deleteMedicine(int id){
+        medicineRepository.delete(id);
     }
 
     /**
@@ -59,8 +60,8 @@ public class AppService {
      *
      * @param id the unique identifier of the object to be deleted.
      */
-    public void delete2(int id){
-        ChangeRepo2.delete(id);
+    public void deletePatient(int id){
+        patientRepository.delete(id);
     }
 
     /**
@@ -69,8 +70,8 @@ public class AppService {
      * @param id the unique identifier of the object to retrieve.
      * @return the object with the specified ID or null when item not found
      */
-    public TestClassForNotGettingError get1(int id){
-        return ChangeRepo1.getByID(id);
+    public Medicine getMedicine(int id){
+        return medicineRepository.getByID(id);
     }
 
     /**
@@ -79,27 +80,31 @@ public class AppService {
      * @param id the unique identifier of the object to retrieve.
      * @return the object with the specified ID or null when item not found
      */
-    public TestClassForNotGettingError get2(int id){
-        return  ChangeRepo2.getByID(id);
+    public Patient getPatient(int id){
+        return  patientRepository.getByID(id);
     }
 
     /**
      * Updates the name of an object in the first repository.
      */
-    public void update1(int id,String name){
-        TestClassForNotGettingError tc = get1(id);
-        tc.setName(name);
-        ChangeRepo1.update(tc);
+    public void updateMedicine(int id,String name,int price,String healthProblem){
+        Medicine med = getMedicine(id);
+        med.setName(name);
+        med.setPrice(price);
+        med.setHealthProblem(healthProblem);
+        medicineRepository.update(med);
 
     }
 
     /**
      * Updates the name of an object in the second repository.
      */
-    public void update2(int id,String name){
-        TestClassForNotGettingError tc = get2(id);
-        tc.setName(name);
-        ChangeRepo2.update(tc);
+    public void updatePatient(int id,String name,int age,String diagnose){
+        Patient patient = getPatient(id);
+        patient.setName(name);
+        patient.setAge(age);
+        patient.setDiagnose(diagnose);
+        patientRepository.update(patient);
     }
 
     /**
@@ -107,8 +112,8 @@ public class AppService {
      *
      * @return a list of all objects in the first repository.
      */
-    public List<TestClassForNotGettingError> getAll1(){
-        return ChangeRepo1.getAll();
+    public List<Medicine> getAllMedicines(){
+        return medicineRepository.getAll();
     }
 
     /**
@@ -116,8 +121,20 @@ public class AppService {
      *
      * @return a list of all objects in the second repository.
      */
-    public List<TestClassForNotGettingError> getAll2(){
-        return ChangeRepo2.getAll();
+    public List<Patient> getAllPatients(){
+        return patientRepository.getAll();
+    }
+
+    /**
+     * Assigns a medicine to a patient
+     * @param patID - the ID of the patient
+     * @param medID - the ID of the medicine
+     * */
+    public void addMedicineToPatient(int patID,int medID){
+        Medicine med = getMedicine(medID);
+        Patient patient = getPatient(patID);
+        patient.addNewMed(med);
+
     }
 
 }
