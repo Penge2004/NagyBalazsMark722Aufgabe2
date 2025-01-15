@@ -6,17 +6,35 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-
+/**
+ * User Interface (UI) class to interact with the user and manage operations on two repositories.
+ * Provides a menu-driven approach to perform CRUD operations on the repositories.
+ */
 public class UI {
+
+    /**
+     * The service layer to handle application logic.
+     */
     AppService appService;
 
+    /**
+     * Reader for handling user input from the console.
+     */
     BufferedReader reader;
 
+    /**
+     * Constructs a UI object with the given service layer.
+     *
+     * @param appService the service layer to interact with the repositories.
+     */
     public UI(AppService appService) {
         this.appService = appService;
         this.reader = new BufferedReader(new InputStreamReader(System.in));
     }
 
+    /**
+     * Starts the main application loop. Displays the main menu and handles user input.
+     */
     public void RUN() {
         try{
             System.out.println("Welcome to the ... App");
@@ -56,6 +74,9 @@ public class UI {
         }
     }
 
+    /**
+     * Displays the menu for managing the first Domain element and handles user input for various operations.
+     */
     public void manageThing1() {
         int choice;
 
@@ -108,14 +129,10 @@ public class UI {
         }
     }
 
+    /**
+     * Displays the menu for managing the second Domain element and handles user input for various operations.
+     */
     public void manageThing2() {
-        System.out.println("Here are your options: \n");
-        System.out.println("1. Add a new thing");
-        System.out.println("2. Delete a thing");
-        System.out.println("3. Update a thing");
-        System.out.println("4. Get a thing by its Id");
-        System.out.println("5. View all things");
-        System.out.println("0. Return to main menu");
 
         int choice;
         try {
@@ -167,6 +184,9 @@ public class UI {
         }
     }
 
+    /**
+     * Adds a new item to the first repository.
+     */
     private void addNewThing1() {
         try {
             System.out.println("Please enter following information: ");
@@ -181,6 +201,9 @@ public class UI {
         }
     }
 
+    /**
+     * Adds a new item to the second repository.
+     */
     private void addNewThing2() {
         try {
             System.out.println("Please enter following information: ");
@@ -195,6 +218,9 @@ public class UI {
         }
     }
 
+    /**
+     * Updates an existing item in the first repository.
+     */
     private void updateThing1() {
         viewAllThing1();
         try {
@@ -210,6 +236,9 @@ public class UI {
         }
     }
 
+    /**
+     * Updates an existing item in the second repository.
+     */
     private void updateThing2() {
         viewAllThing2();
         try {
@@ -225,18 +254,27 @@ public class UI {
         }
     }
 
+    /**
+     * Displays all items in the first repository.
+     */
     private void viewAllThing1() {
         System.out.println("All thing1 :");
         appService.getAll1().forEach(System.out::println);
         System.out.println();
     }
 
+    /**
+     * Displays all items in the second repository.
+     */
     private void viewAllThing2() {
         System.out.println("All thing2 :");
         appService.getAll2().forEach(System.out::println);
         System.out.println();
     }
 
+    /**
+     * Displays an item from the first repository by its ID.
+     */
     private void getThing1ByID() {
         try {
             System.out.println("Enter the ID of the thing you would like to view: ");
@@ -247,6 +285,9 @@ public class UI {
         }
     }
 
+    /**
+     * Displays an item from the second repository by its ID.
+     */
     private void getThing2ByID() {
         try {
             System.out.println("Enter the ID of the thing you would like to view: ");
@@ -257,6 +298,9 @@ public class UI {
         }
     }
 
+    /**
+     * Deletes an item from the first repository by its ID.
+     */
     private void deleteThing1(){
         try {
             viewAllThing1();
@@ -270,6 +314,9 @@ public class UI {
         }
     }
 
+    /**
+     * Deletes an item from the second repository by its ID.
+     */
     private void deleteThing2(){
         try {
             viewAllThing2();
